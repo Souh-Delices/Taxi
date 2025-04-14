@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Ticket de Taxi 58mm</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Précharger la police -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h1>Générateur de Ticket de Taxi (Style 58mm)</h1>
+
+    <div class="generator-layout">
+        <!-- Formulaire de saisie -->
+        <div class="form-section">
+            <h2>Paramètres du Ticket</h2>
+            <form id="receipt-form">
+                <fieldset>
+                    <legend>Informations Chauffeur/Taxi</legend>
+                    <!-- Utiliser des inputs pour la cohérence et permettre la modification si nécessaire -->
+                    <label for="driver-name">Nom Chauffeur:</label>
+                    <input type="text" id="driver-name" value="MERAD NOURDINE" readonly>  <!-- Ajout de readonly -->
+
+                    <label for="station-no">No Stat:</label>
+                    <!-- Laisser modifiable ou ajouter readonly si besoin -->
+                    <input type="text" id="station-no" value="5438">
+
+                    <label for="immat-no">No Immat:</label>
+                    <input type="text" id="immat-no" value="GT-777-HF" readonly>      <!-- Ajout de readonly -->
+
+                    <label for="commune">Commune de rattachement:</label>
+                    <input type="text" id="commune" value="PARIS" readonly>          <!-- Ajout de readonly -->
+                </fieldset>
+                    <legend>Informations Course</legend>
+                    <label for="date">Date:</label>
+                    <!-- **** CHANGED type to "date" **** -->
+                    <input type="date" id="date">
+
+                    <label for="depart-time">Heure Départ:</label>
+                    <!-- **** CHANGED type to "time" **** -->
+                    <input type="time" id="depart-time">
+
+                    <label for="arrivee-time">Heure Arrivée:</label>
+                    <!-- **** CHANGED type to "time" **** -->
+                    <input type="time" id="arrivee-time">
+
+                    <label for="depart-lieu">Lieu Départ:</label>
+                    <input type="text" id="depart-lieu" placeholder="Ex: 1 Rue de Paris">
+
+                    <label for="arrivee-lieu">Lieu Arrivée:</label>
+                    <input type="text" id="arrivee-lieu" placeholder="Ex: Aéroport CDG Terminal 1">
+                </fieldset>
+
+                <fieldset>
+                    <legend>Tarification</legend>
+                    <label for="prise-charge">Prise en charge (€):</label>
+                    <input type="number" id="prise-charge" value="3.00" step="0.01">
+
+                    <label for="sous-total">Sous total TTC avant suppl. (€):</label>
+                    <input type="number" id="sous-total" value="4.20" step="0.01">
+
+                    <label for="supplement-type">Type Supplément:</label>
+                    <select id="supplement-type">
+                        <option value="">Aucun</option>
+                        <option value="RESAIMMEDI" selected>RESAIMMEDI</option> <!-- Sélectionné par défaut -->
+                        <option value="RESAAVANCE">RESAAVANCE</option>
+                        <option value="Autre">Autre (Saisir libellé)</option>
+                    </select>
+                    <input type="text" id="supplement-label" placeholder="Libellé si Autre" style="display: none;">
+
+                    <label for="supplement-amount">Montant Supplément (€):</label>
+                    <input type="number" id="supplement-amount" value="4.00" step="0.01">
+
+                    <label for="tva-rate">Taux TVA (%):</label>
+                    <input type="number" id="tva-rate" value="10.00" step="0.01" readonly> <!-- Lecture seule -->
+                </fieldset>
+
+                <fieldset>
+                    <legend>Informations Client</legend>
+                    <label for="client-name">Nom client:</label>
+                    <input type="text" id="client-name" placeholder="Laisser vide pour pointillés">
+
+                    <label for="client-address">Adresse client:</label>
+                    <textarea id="client-address" rows="2" placeholder="Laisser vide pour pointillés"></textarea>
+                </fieldset>
+
+                 <fieldset>
+                    <legend>QR Code</legend>
+                    <label for="qr-code-url">URL pour QR Code (optionnel):</label>
+                    <input type="text" id="qr-code-url" placeholder="https://example.com/payment">
+                </fieldset>
+
+                 <div class="actions">
+                     <button type="button" id="export-pdf">Exporter en PDF (58mm)</button>
+                     <button type="button" id="print-receipt">Imprimer Ticket (58mm)</button>
+                     <input type="hidden" id="print-width" value="58mm">
+                </div>
+            </form>
+        </div>
+
+        <!-- Prévisualisation du Ticket -->
+        <div class="preview-section">
+            <h2>Prévisualisation (58mm)</h2>
+            <div id="receipt-preview-container" class="receipt-preview-container">
+                <!-- Classe 58mm appliquée directement -->
+                <div class="receipt receipt-58mm" id="receipt-preview">
+                    <!-- Contenu du ticket ici (inchangé structurellement) -->
+                     <div class="center-text bold driver-name" id="preview-driver-name">MERAD NOURDINE</div>
+                     <div class="line">
+                         <span>No Stat.:</span>
+                         <span class="align-right" id="preview-station-no">5438</span>
+                     </div>
+                     <div class="line">
+                         <span>No Immat.:</span>
+                         <span class="align-right" id="preview-immat-no">GT-777-HF</span>
+                     </div>
+                     <div class="line">
+                         <span>Commune de rattachement:</span>
+                         <span class="align-right" id="preview-commune">PARIS</span>
+                     </div>
+                     <div class="spacer"></div>
+                     <div class="line">
+                         <span>Date:</span>
+                         <!-- **** Placeholder mis à jour **** -->
+                         <span class="align-right" id="preview-date">jj/mm/aaaa</span>
+                     </div>
+                     <div class="line">
+                         <span>Départ:<span id="preview-depart-time">hh:mm</span></span>
+                         <span class="align-right">Arrivée:<span id="preview-arrivee-time">hh:mm</span></span>
+                     </div>
+                     <div class="left-text">Lieu départ:</div>
+                     <div class="left-text placeholder" id="preview-depart-lieu">....................</div>
+                     <div class="left-text">Lieu arrivée:</div>
+                     <div class="left-text placeholder" id="preview-arrivee-lieu">....................</div>
+                     <div class="spacer-small"></div>
+                     <div class="spacer-small"></div>
+                     <div class="line pricing-line">
+                         <span>Prise en charge</span>
+                         <span class="align-right price"><span id="preview-prise-charge">3.00</span> €</span>
+                     </div>
+                     <div class="line pricing-line">
+                         <span>Sous total ttc</span>
+                         <span class="align-right price"><span id="preview-sous-total">4.20</span> €</span>
+                     </div>
+                     <div class="line" id="supplement-label-line" style="display: none;">
+                         <span>Supplement(s):</span>
+                     </div>
+                     <div class="line" id="supplement-detail-line" style="display: none;">
+                         <span id="preview-supplement-type">RESAIMMEDI</span>
+                         <span class="align-right price"><span id="preview-supplement-amount">4.00</span> €</span>
+                     </div>
+                     <div class="spacer-small"></div>
+                     <div class="line total-line">
+                         <span>TOTAL TTC</span>
+                         <span class="align-right price total-amount"><span id="preview-total-ttc">8.20</span> €</span>
+                     </div>
+                     <div class="line detail-line">
+                         <span>Total TVA <span id="preview-tva-rate">10.00</span>%</span>
+                         <span class="align-right price"><span id="preview-total-tva">0.75</span> €</span>
+                     </div>
+                     <div class="line detail-line">
+                         <span>Total HT</span>
+                         <span class="align-right price"><span id="preview-total-ht">7.45</span> €</span>
+                     </div>
+                     <div class="line final-total-line">
+                         <span>TOTAL TTC</span>
+                         <span class="align-right final-dots">......,€</span>
+                     </div>
+                     <div class="spacer"></div>
+                     <div class="spacer-small"></div>
+                     <div class="center-text small-text footer-block">
+                         Le tarif minimum, suppl. inclus, susceptible d'être perçu pour une course est fixé à 8.00 €
+                     </div>
+                     <div class="spacer-small"></div>
+                     <div class="center-text small-text footer-block address-block">
+                         Adresse de réclamation:<br>
+                         PREFECTURE DE POLICE<br>
+                         DIRECTION DES USAGERS ET DES POLICES<br>
+                         ADMINISTRATIVES [DUPA]<br>
+                         BUREAU DES TAXIS ET TRANSPORTS PUBLICS<br>
+                         36 RUE DES MORILLONS<br>
+                         75732 PARIS CEDEX 15
+                     </div>
+                     <div class="spacer"></div>
+                     <div class="left-text client-label">Nom client:</div>
+                     <div class="left-text client-value placeholder" id="preview-client-name">....................</div>
+                     <div class="left-text client-label">Adresse client:</div>
+                     <div class="left-text client-value placeholder address-placeholder" id="preview-client-address">....................</div>
+                     <div class="spacer"></div>
+                     <div class="qr-code-container" id="qr-code-container" style="display: none;">
+                         <canvas id="qr-code-canvas"></canvas>
+                     </div>
+                     <div class="spacer-small"></div>
+                     <div class="center-text exemplar">Exemplaire client</div>
+                     <div class="spacer-small"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Librairies JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

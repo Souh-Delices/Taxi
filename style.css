@@ -1,0 +1,348 @@
+/* style.css */
+
+/* --- Variables Globales (Custom Properties) --- */
+:root {
+    /* Polices */
+    --font-primary: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Police système moderne */
+    --font-receipt: 'Courier Prime', 'Courier New', Courier, monospace;
+
+    /* Couleurs */
+    --color-bg-body: #f8f9fa; /* Fond légèrement plus clair */
+    --color-bg-container: #fff;
+    --color-bg-preview: #e9ecef; /* Gris clair assorti */
+    --color-text-primary: #212529; /* Noir doux */
+    --color-text-secondary: #6c757d; /* Gris moyen */
+    --color-text-subtle: #495057; /* Gris foncé */
+    --color-text-receipt: #000;
+    --color-border: #ced4da; /* Gris clair */
+    --color-border-receipt: #dee2e6;
+    --color-shadow: rgba(0, 0, 0, 0.075);
+    --color-shadow-receipt: rgba(0, 0, 0, 0.15);
+    --color-button-bg: #007bff;
+    --color-button-hover-bg: #0056b3;
+    --color-button-text: white;
+    --color-focus-ring: rgba(0, 123, 255, 0.25);
+
+    /* Espacement */
+    --spacing-base: 20px;
+    --spacing-medium: 15px;
+    --spacing-small: 10px;
+    --spacing-xs: 5px;
+
+    /* Tailles spécifiques au ticket */
+    --receipt-width-58mm: 219px; /* ~58mm */
+    --receipt-width-80mm: 302px; /* ~80mm */
+
+    /* Rayons */
+    --border-radius-base: 8px;
+    --border-radius-small: 5px;
+    --border-radius-form: 6px; /* Légèrement plus arrondi */
+}
+
+/* --- Styles Globaux --- */
+/* Import de police déjà géré via <link> dans l'HTML */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    margin: 0;
+    padding: var(--spacing-base);
+    background-color: var(--color-bg-body);
+    display: flex;
+    justify-content: center;
+    color: var(--color-text-primary);
+    line-height: 1.6; /* Interligne amélioré */
+}
+
+/* --- Conteneur Principal --- */
+.container {
+    max-width: 1200px;
+    width: 100%;
+    background-color: var(--color-bg-container);
+    padding: calc(var(--spacing-base) * 1.5); /* Plus de padding */
+    box-shadow: 0 0.5rem 1rem var(--color-shadow); /* Ombre plus douce */
+    border-radius: var(--border-radius-base);
+    border: 1px solid var(--color-border-receipt); /* Légère bordure */
+}
+
+h1, h2 {
+    text-align: center;
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: calc(var(--spacing-base) * 1.5);
+    font-weight: 600; /* Titres légèrement moins gras */
+}
+h2 {
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--color-border-receipt);
+    padding-bottom: var(--spacing-small);
+    margin-bottom: var(--spacing-base);
+}
+
+/* --- Mise en page Générateur --- */
+.generator-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-base) * 2); /* Espace augmenté */
+}
+
+.form-section,
+.preview-section {
+    flex: 1;
+    min-width: 320px; /* Légèrement plus large */
+}
+
+.preview-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Styles du Formulaire (Améliorations) --- */
+#receipt-form fieldset {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-medium) var(--spacing-base); /* Padding ajusté */
+    margin-bottom: var(--spacing-base);
+    background-color: transparent;
+}
+
+#receipt-form legend {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    padding: 0 var(--spacing-xs);
+    margin-left: var(--spacing-small);
+    font-size: 0.95rem;
+}
+
+/* Groupe Label + Input */
+#receipt-form .form-group {
+    margin-bottom: var(--spacing-medium);
+}
+
+#receipt-form label {
+    display: block;
+    margin-bottom: 6px; /* Espace légèrement augmenté */
+    font-weight: 500;
+    color: var(--color-text-subtle);
+    font-size: 0.9rem;
+}
+
+/* Styles améliorés pour les inputs */
+#receipt-form input[type="text"],
+#receipt-form input[type="number"],
+#receipt-form input[type="date"],
+#receipt-form input[type="time"],
+#receipt-form select,
+#receipt-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-form);
+    font-size: 1rem;
+    font-family: inherit; /* Hérite la police du body */
+    background-color: var(--color-bg-container);
+    color: var(--color-text-primary);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    line-height: 1.5; /* Assure hauteur ligne standard */
+}
+
+/* Style Select spécifique pour la flèche */
+#receipt-form select {
+     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+     background-repeat: no-repeat;
+     background-position: right 0.75rem center;
+     background-size: 16px 12px;
+     padding-right: 2.5rem; /* Espace pour la flèche */
+}
+
+
+/* Focus state */
+#receipt-form input:focus,
+#receipt-form select:focus,
+#receipt-form textarea:focus {
+    outline: none;
+    border-color: var(--color-button-bg);
+    box-shadow: 0 0 0 3px var(--color-focus-ring); /* Halo plus visible */
+}
+
+/* Style spécifique pour les champs readonly */
+#receipt-form .readonly-input,
+#receipt-form input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Layout pour mettre des champs côte à côte */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-medium);
+    /* margin-bottom: var(--spacing-medium); -- Redondant avec .form-group */
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 150px;
+    margin-bottom: 0;
+}
+
+/* Ajustement pour les contrôles de supplément alignés */
+.supplement-controls {
+    display: flex;
+    gap: var(--spacing-small);
+    align-items: center;
+}
+.supplement-controls select {
+    flex: 1 1 auto; /* Permet de rétrécir et grandir */
+}
+.supplement-controls input[type="text"] {
+    flex: 1 1 auto; /* Permet de rétrécir et grandir */
+    /* margin-left: 5px; -- Géré par gap */
+}
+
+
+#receipt-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+#receipt-form .actions {
+    margin-top: calc(var(--spacing-base) * 1.5);
+    text-align: center;
+    padding-top: var(--spacing-base);
+    border-top: 1px solid var(--color-border-receipt);
+}
+
+#receipt-form button {
+    padding: 10px 20px; /* Plus de padding horizontal */
+    background-color: var(--color-button-bg);
+    color: var(--color-button-text);
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 1rem; /* Taille de police standard */
+    margin: var(--spacing-xs);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    font-weight: 500;
+}
+
+#receipt-form button:hover {
+    background-color: var(--color-button-hover-bg);
+    transform: translateY(-1px); /* Léger effet au survol */
+}
+#receipt-form button:active {
+    transform: translateY(0);
+}
+
+/* --- Styles de la Prévisualisation du Ticket --- */
+.receipt-preview-container {
+    width: 100%;
+    max-width: 320px;
+    padding: var(--spacing-base); /* Plus de padding autour */
+    background-color: var(--color-bg-preview);
+    border-radius: var(--border-radius-small);
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-small);
+    border: 1px solid var(--color-border);
+}
+
+/* === STYLES DU TICKET (.receipt) ET IMPRESSION - INCHANGÉS === */
+/*     Ils restent exactement comme dans la version précédente     */
+/* ============================================================= */
+
+.receipt {
+    background-color: var(--color-bg-container);
+    font-family: var(--font-receipt);
+    font-size: 9pt;
+    line-height: 1.25;
+    color: var(--color-text-receipt);
+    padding: 5px;
+    box-shadow: 0 0 5px var(--color-shadow-receipt);
+    border: 1px solid var(--color-border-receipt);
+    overflow: hidden;
+    word-wrap: break-word;
+}
+.receipt-58mm {
+    width: var(--receipt-width-58mm);
+    max-width: var(--receipt-width-58mm);
+}
+.receipt-80mm {
+    width: var(--receipt-width-80mm);
+    max-width: var(--receipt-width-80mm);
+    font-size: 10pt;
+    line-height: 1.3;
+}
+.receipt .center-text { text-align: center; margin-bottom: 3px; }
+.receipt .left-text { text-align: left; margin-bottom: 1px; }
+.receipt .bold { font-weight: 700; }
+.receipt .driver-name { margin-bottom: 5px; }
+.receipt .line { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; min-height: 1.1em; }
+.receipt .line span:first-child { padding-right: 5px; }
+.receipt .align-right { text-align: right; margin-left: auto; padding-left: 5px; white-space: nowrap; }
+.receipt .price { white-space: nowrap; }
+.receipt .total-line { margin-top: 3px; font-size: 10pt; font-weight: 700; }
+.receipt .total-amount { font-size: 11pt; }
+.receipt .detail-line { font-size: 8pt; color: var(--color-text-primary); margin-bottom: 0; }
+.receipt .final-total-line { margin-top: 2px; font-size: 10pt; font-weight: 700; }
+.receipt .final-dots { font-weight: normal; letter-spacing: 1px; }
+.receipt .spacer { height: 8px; }
+.receipt .spacer-small { height: 4px; }
+.receipt .small-text { font-size: 7.5pt; line-height: 1.15; text-align: center; }
+.receipt .footer-block { margin-bottom: 3px; padding: 0 2px; }
+.receipt .address-block { font-size: 7pt; line-height: 1.1; }
+.receipt .client-label { text-align: left; margin-bottom: 0; font-size: 9pt; }
+.receipt .client-value { text-align: left; margin-bottom: 3px; font-size: 9pt; min-height: 1.1em; }
+.receipt .client-value.placeholder, .receipt .left-text.placeholder { color: var(--color-text-secondary); font-style: italic; letter-spacing: 0.5px; }
+.receipt .client-value.address-placeholder { white-space: pre-wrap; }
+.receipt .qr-code-container { text-align: center; margin: 5px 0; }
+.receipt #qr-code-canvas { width: 80px !important; height: 80px !important; display: inline-block; vertical-align: middle; }
+.receipt .exemplar { font-size: 8pt; margin-top: 5px; text-align: center; }
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .generator-layout { flex-direction: column; gap: var(--spacing-base); }
+    .form-section, .preview-section { flex: none; width: 100%; min-width: unset; }
+    .receipt-preview-container { max-width: 100%; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.3rem; }
+}
+
+/* --- Styles pour l'impression THERMIQUE (58mm) --- */
+@media print {
+    body * { visibility: hidden; margin: 0; padding: 0; box-shadow: none; border: none; }
+    .receipt-preview-container, .receipt-preview-container * { visibility: visible; }
+    .receipt-preview-container { position: absolute; left: 0; top: 0; width: auto; height: auto; margin: 0 !important; padding: 0 !important; background-color: transparent !important; max-width: none !important; border: none !important; box-shadow: none !important; overflow: visible !important; }
+    .receipt { width: 58mm !important; max-width: 58mm !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; border: none !important; font-family: var(--font-receipt) !important; font-size: 8pt !important; line-height: 1.15 !important; color: #000 !important; background-color: #fff !important; color-adjust: exact !important; -webkit-print-color-adjust: exact !important; overflow: visible !important; word-wrap: break-word !important; white-space: normal !important; }
+    .receipt .line, .receipt .center-text, .receipt .left-text, .receipt .client-label, .receipt .client-value { margin-bottom: 0.5px !important; min-height: 1em !important; }
+    .receipt .spacer { height: 4px !important; }
+    .receipt .spacer-small { height: 2px !important; }
+    .receipt .total-line { font-size: 9pt !important; margin-top: 2px !important; }
+    .receipt .total-amount { font-size: 10pt !important; }
+    .receipt .detail-line { font-size: 7pt !important; }
+    .receipt .final-total-line { font-size: 9pt !important; margin-top: 1px !important;}
+    .receipt .small-text { font-size: 6.5pt !important; line-height: 1.1 !important; }
+    .receipt .address-block { font-size: 6pt !important; line-height: 1.05 !important;}
+    .receipt .client-label, .receipt .client-value { font-size: 8pt !important; }
+    .receipt .price, .receipt .align-right { padding-left: 2px !important; }
+    .receipt .qr-code-container { margin: 3px 0 !important; }
+    .receipt #qr-code-canvas { width: 60px !important; height: 60px !important; margin: 0 auto !important; }
+    .receipt .exemplar { font-size: 7pt !important; margin-top: 3px !important;}
+    .receipt.receipt-58mm, .receipt.receipt-80mm { width: 58mm !important; max-width: 58mm !important; }
+    @page { margin: 0mm !important; size: 58mm auto; }
+}
+
+/* --- Optionnel: Styles d'impression 80mm --- */
+/* @media print { .receipt.receipt-print-80mm { width: 80mm !important; ... } @page { size: 80mm auto; } } */
